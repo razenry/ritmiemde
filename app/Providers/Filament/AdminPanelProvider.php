@@ -62,6 +62,12 @@ class AdminPanelProvider extends PanelProvider
             ->emailVerification()
             ->colors([
                 'primary' => Color::Amber,
+                'secondary' => Color::Gray,
+                'danger' => Color::Red,
+                'success' => Color::Green,
+                'warning' => Color::Yellow,
+                'info' => Color::Blue,
+                'light' => Color::Gray,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -109,7 +115,7 @@ class AdminPanelProvider extends PanelProvider
                     shouldRegisterNavigation: true, // Adds a main navigation item for the My Profile page (default = false)
                     navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
                     hasAvatars: true, // Enables the avatar upload form component (default = false)
-                    slug: 'my-profile'
+                    slug: 'my-profile',
                 )
                 ->avatarUploadComponent(fn($fileUpload) => $fileUpload->disableLabel())
                 // OR, replace with your own component
@@ -124,25 +130,25 @@ class AdminPanelProvider extends PanelProvider
         if ($this->settings->sso_enabled ?? true) {
             $plugins[] =
                 FilamentSocialitePlugin::make()
-                ->providers([
-                    Provider::make('google')
-                        ->label('Google')
-                        ->icon('fab-google')
-                        ->color(Color::hex('#2f2a6b'))
-                        ->outlined(true)
-                        ->stateless(false)
-                ])->registration(true)
-                ->createUserUsing(function (string $provider, SocialiteUserContract $oauthUser, FilamentSocialitePlugin $plugin) {
-                    $user = User::firstOrNew([
-                        'email' => $oauthUser->getEmail(),
-                    ]);
-                    $user->name = $oauthUser->getName();
-                    $user->email = $oauthUser->getEmail();
-                    $user->email_verified_at = now();
-                    $user->save();
+                    ->providers([
+                        Provider::make('google')
+                            ->label('Google')
+                            ->icon('fab-google')
+                            ->color(Color::hex('#2f2a6b'))
+                            ->outlined(true)
+                            ->stateless(false)
+                    ])->registration(true)
+                    ->createUserUsing(function (string $provider, SocialiteUserContract $oauthUser, FilamentSocialitePlugin $plugin) {
+                        $user = User::firstOrNew([
+                            'email' => $oauthUser->getEmail(),
+                        ]);
+                        $user->name = $oauthUser->getName();
+                        $user->email = $oauthUser->getEmail();
+                        $user->email_verified_at = now();
+                        $user->save();
 
-                    return $user;
-                });
+                        return $user;
+                    });
         }
         return $plugins;
     }

@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Buku;
+use App\Models\Kategori;
 use App\Models\User;
+use App\Observers\BukuObserver;
+use App\Observers\KategoriObserver;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -34,5 +38,8 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
             $event->extendSocialite('discord', \SocialiteProviders\Google\Provider::class);
         });
+
+        Kategori::observe(KategoriObserver::class);
+        Buku::observe(BukuObserver::class);
     }
 }
