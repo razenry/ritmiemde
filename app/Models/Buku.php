@@ -10,7 +10,19 @@ class Buku extends Model
     use SoftDeletes;
 
     // add fillable
-    protected $fillable = [];
+    protected $fillable = [
+        'slug',
+        'judul',
+        'pengarang',
+        'penerbit',
+        'tahun_terbit',
+        'bahasa',
+        'sinopsis',
+        'cover',
+        'link',
+        'kategori_id',
+        'user_id',
+    ];
     // add guaded
     protected $guarded = ['id'];
     // add hidden
