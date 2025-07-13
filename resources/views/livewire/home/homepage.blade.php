@@ -1,5 +1,5 @@
 
-<div>
+<div class="container">
     <section class="bg-white">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-1 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7 space-y-2">
